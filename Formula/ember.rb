@@ -5,6 +5,13 @@ class Ember < Formula
   sha256 "8140a4fd0740cfcedfbeca4e1e2c8fc58b6f9c541381904caf0527e19cbead2a"
   license any_of: ["MIT", "Apache-2.0"]
 
+  bottle do
+    root_url "https://github.com/kingb/ember/releases/download/v0.1.0"
+    rebuild 1
+    sha256 cellar: :any, arm64_linux: "a8800d35feed05b8ee9970248c83c7b519f36b4741380ba078639beb0b997bf6"
+    sha256 cellar: :any, x86_64_linux: "11f860b2e030ca389b470821a84c21b3cbc2746847914897dd68571c83696b1c"
+  end
+
   # Intended for Linux (macOS installs the notarized app bundle via the cask
   # instead), but not hard-restricted: there's no real `depends_on` gate for
   # "Linux only" in Homebrew, and this builds fine cross-platform anyway.
