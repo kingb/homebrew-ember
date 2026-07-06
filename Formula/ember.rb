@@ -1,15 +1,15 @@
 class Ember < Formula
   desc "GPU-accelerated campfire terminal emulator"
   homepage "https://emberterm.com"
-  url "https://github.com/kingb/ember/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "8140a4fd0740cfcedfbeca4e1e2c8fc58b6f9c541381904caf0527e19cbead2a"
+  url "https://github.com/kingb/ember/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "2248618815be871ffb34b6106012fed732a76b48b84f68628b851b107f0e2854"
   license any_of: ["MIT", "Apache-2.0"]
 
   bottle do
-    root_url "https://github.com/kingb/ember/releases/download/v0.1.0"
+    root_url "https://github.com/kingb/ember/releases/download/v0.2.0"
     rebuild 1
-    sha256 cellar: :any, arm64_linux:  "a8800d35feed05b8ee9970248c83c7b519f36b4741380ba078639beb0b997bf6"
-    sha256 cellar: :any, x86_64_linux: "11f860b2e030ca389b470821a84c21b3cbc2746847914897dd68571c83696b1c"
+    sha256 cellar: :any, arm64_linux:  "4d1d3070ded63016645eddc993f4e84be13afa194d829fb63bc2cf9da674a270"
+    sha256 cellar: :any, x86_64_linux: "36af09562f774c903ba1012eb7de8fdc30840c5c4c60df0b06cba077e4fbf459"
   end
 
   # Intended for Linux (macOS installs the notarized app bundle via the cask
@@ -22,7 +22,7 @@ class Ember < Formula
   # built binary has zero link-time dependency on any of them (winit/wgpu
   # dlopen X11/Wayland/Vulkan/EGL at runtime, confirmed via ldd showing only
   # libc/libm/libgcc), so the system's real GPU driver stack is what actually
-  # gets loaded regardless of what's on the build machine. See em-8se.10.1.
+  # gets loaded regardless of what's on the build machine.
   on_linux do
     depends_on "pkg-config" => :build
   end
