@@ -1,14 +1,14 @@
 class Ember < Formula
   desc "GPU-accelerated campfire terminal emulator"
   homepage "https://emberterm.com"
-  url "https://github.com/kingb/ember/archive/refs/tags/v0.4.0.tar.gz"
-  sha256 "6925c3e35a806d78cf37f1c096fb8de5d973bfe4ee36dc055db0e715c391e88b"
+  url "https://github.com/kingb/ember/archive/refs/tags/v0.4.1.tar.gz"
+  sha256 "fe9c790c8bbc7f8facbd7138d5c44559225763a2c253b357493f132a98d688df"
   license any_of: ["MIT", "Apache-2.0"]
 
   bottle do
-    root_url "https://github.com/kingb/ember/releases/download/v0.4.0"
-    sha256 cellar: :any_skip_relocation, arm64_linux:  "c5d44530b8e119c29a70a79bec62dab969f14861a00e0859bc5c501785231141"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "bd623ac719696de0fc98a2fe0b03efb57cdc82f958f166d67a5313c2091dca6d"
+    root_url "https://github.com/kingb/ember/releases/download/v0.4.1"
+    sha256 cellar: :any_skip_relocation, arm64_linux:  "ec43d8e60383f51d21a0f34d7abea085cc8ca8d9c18e9c7ab11a080b0ecc854e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "1046cb21840c3228f41d9ebf087fec9afc9322837142a0a2aa5d59e995dc44c7"
   end
 
   # Intended for Linux (macOS installs the notarized app bundle via the cask
