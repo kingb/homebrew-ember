@@ -1,14 +1,14 @@
 class Ember < Formula
   desc "GPU-accelerated campfire terminal emulator"
   homepage "https://emberterm.com"
-  url "https://github.com/kingb/ember/archive/refs/tags/v0.4.1.tar.gz"
-  sha256 "fe9c790c8bbc7f8facbd7138d5c44559225763a2c253b357493f132a98d688df"
+  url "https://github.com/kingb/ember/archive/refs/tags/v0.4.2.tar.gz"
+  sha256 "7190355373abf8fc06232e6a73394dae0b83e48897dfb5304c3e51f5b7cfc14f"
   license any_of: ["MIT", "Apache-2.0"]
 
   bottle do
-    root_url "https://github.com/kingb/ember/releases/download/v0.4.1"
-    sha256 cellar: :any_skip_relocation, arm64_linux:  "ec43d8e60383f51d21a0f34d7abea085cc8ca8d9c18e9c7ab11a080b0ecc854e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "1046cb21840c3228f41d9ebf087fec9afc9322837142a0a2aa5d59e995dc44c7"
+    root_url "https://github.com/kingb/ember/releases/download/v0.4.2"
+    sha256 cellar: :any_skip_relocation, arm64_linux:  "bd471ba03236fac842c433a81ebf9ab1f6d34ea1d1ea5e99b3bc2e7b5ddeae1a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "369c428843165676fb32a19fcd126ed61b0c89909f7fe8c0e4923b4925b76356"
   end
 
   # Intended for Linux (macOS installs the notarized app bundle via the cask
@@ -32,6 +32,34 @@ class Ember < Formula
 
   def install
     system "cargo", "install", *std_cargo_args(path: "crates/ember-app")
+
+    # Linux desktop integration (GNOME/KDE app grid + docks). Shipped under the
+    # Homebrew prefix; GNOME does not scan it, so `caveats` prints a no-sudo
+    # user-local copy one-liner that rewrites Exec= to the absolute brew path.
+    # (Bottles carry these too — see scripts/release/bottle-build.sh.)
+    return unless OS.linux?
+
+    (share/"applications").install "extra/linux/ember-term.desktop"
+    (share/"icons").install "extra/linux/icons/hicolor"
+  end
+
+  def caveats
+    return unless OS.linux?
+
+    <<~EOS
+      To add Ember to your desktop environment (GNOME app grid, KDE launcher,
+      docks) without sudo, copy the launcher into your user data dir with an
+      absolute Exec path (GNOME does not scan the Homebrew prefix):
+
+        mkdir -p ~/.local/share/applications ~/.local/share/icons
+        sed 's|^Exec=ember-term$|Exec=#{opt_bin}/ember-term|; s|^TryExec=ember-term$|TryExec=#{opt_bin}/ember-term|' \\
+          #{opt_prefix}/share/applications/ember-term.desktop > ~/.local/share/applications/ember-term.desktop
+        cp -r #{opt_prefix}/share/icons/hicolor ~/.local/share/icons/
+        update-desktop-database ~/.local/share/applications 2>/dev/null || true
+
+      Ember then appears in the app grid; its windows group under the icon
+      (WM_CLASS/app_id = ember-term).
+    EOS
   end
 
   test do
